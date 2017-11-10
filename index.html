@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+      h3 {
+        margin-top: 0;
+      }
+      img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>vue-match-heights</h1>
+        <h3>The following blocks will not be resized on viewports between 0-768px and 920-1000px.</h3>
+        <div
+          class="row"
+          v-match-heights="{
+            el: ['h3', '.content', '.caption'],
+          }">
+          <div class="col-sm-6">
+            <div class="thumbnail">
+              <img src="http://lorempixel.com/600/400/?1">
+              <div class="caption">
+                <div class="title">
+                  <h3>Thumbnail label</h3>
+                </div>
+                <div class="content">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at consequuntur cum cumque dignissimos exercitationem, ipsam libero maiores obcaecati officia pariatur perferendis, praesentium quae ratione reiciendis sed, sit vel voluptas?</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at consequuntur cum cumque dignissimos exercitationem, ipsam libero maiores obcaecati officia pariatur perferendis, praesentium quae ratione reiciendis sed, sit vel voluptas?</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at consequuntur cum cumque dignissimos exercitationem, ipsam libero maiores obcaecati officia pariatur perferendis, praesentium quae ratione reiciendis sed, sit vel voluptas?</p>
+                </div>
+              </div>
+              <div class="buttons">
+                <a href="#" class="btn btn-primary btn-block" role="button">Button</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="thumbnail">
+              <img src="http://lorempixel.com/600/400/?2">
+              <div class="caption">
+                <div class="title">
+                  <h3>Thumbnail label consectetur adipisicing elit. Aperiam at consequuntur cum</h3>
+                </div>
+                <div class="content">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at consequuntur cum cumque dignissimos exercitationem, ipsam libero maiores obcaecati officia pariatur perferendis, praesentium quae ratione reiciendis sed, sit vel voluptas?</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at consequuntur cum cumque dignissimos exercitationem, ipsam libero maiores obcaecati officia pariatur perferendis, praesentium quae ratione reiciendis sed, sit vel voluptas?</p>
+                </div>
+              </div>
+              <div class="buttons">
+                <a href="#" class="btn btn-primary btn-block" role="button">Button</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.js" integrity="sha256-z1if//it5+Nk8vE5T+Oj4fQFt3lzPUCZBFB8nfSzBWo=" crossorigin="anonymous"></script>
+    <script src="/dist/vue-match-heights.js"></script>
+    <script>
+      Vue.use(VueMatchHeights, {
+        disabled: [768],
+      })
+
+      new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>
