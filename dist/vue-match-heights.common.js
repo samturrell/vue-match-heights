@@ -1,5 +1,5 @@
 /*!
- * vue-match-heights v0.0.0 
+ * vue-match-heights v0.1.0 
  * (c) 2017 Sam Turrell
  * Released under the MIT License.
  */
@@ -142,7 +142,7 @@ function plugin (Vue, options) {
   });
 }
 
-plugin.version = '0.0.0';
+plugin.version = '0.1.0';
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(plugin);
