@@ -113,7 +113,6 @@ function plugin (Vue, options) {
 
   Vue.directive('match-heights', {
     bind: function bind (el, binding) {
-      console.log(options);
       function matchHeightsFunc () {
         matchHeights(binding.value.el, binding.value.disabled || options.disabled || []);
       }
