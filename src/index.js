@@ -12,9 +12,9 @@ function removeHeight (element) {
  *
  * @param selectors
  */
-function removeHeights (selectors) {
+function removeHeights (selectors, parent=document) {
   selectors.forEach((selector) => {
-    const elements = document.querySelectorAll(selector)
+    const elements = parent.querySelectorAll(selector)
     elements.forEach((element) => {
       removeHeight(element)
     })
@@ -45,8 +45,8 @@ function getMinHeight (elements) {
  *
  * @param selector
  */
-function setHeight (selector) {
-  const elements = document.querySelectorAll(selector)
+function setHeight (selector, parent=document) {
+  const elements = parent.querySelectorAll(selector)
   const height = getMinHeight(elements)
 
   elements.forEach((element) => {
@@ -85,15 +85,17 @@ function shouldRun (rules) {
  * @param selectors
  * @param disabled
  */
-function matchHeights (selectors = [], disabled = []) {
+function matchHeights (selectors = [], disabled = [], parent=document) {
   // Size each selector in turn
-  removeHeights(selectors)
+  removeHeights(selectors, parent)
 
   // Check if the plugin should run
   if (!shouldRun(disabled)) return false
 
   // Size each provided selector
-  selectors.forEach(setHeight)
+  selectors.forEach((el)=> {
+    setHeight(el, parent)
+  })
 }
 
 
@@ -101,7 +103,7 @@ function plugin (Vue, options = {}) {
   Vue.directive('match-heights', {
     bind (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [])
+        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [], el)
       }
       matchHeightsFunc()
       window.addEventListener('resize', matchHeightsFunc)
@@ -110,7 +112,7 @@ function plugin (Vue, options = {}) {
 
     inserted (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [])
+        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [], el)
       }
 
       // Handle images rendering
