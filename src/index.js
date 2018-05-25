@@ -4,7 +4,7 @@
  * @param element
  */
 function removeHeight (element) {
-  element.style.removeProperty('height')
+  element.style.removeProperty('height');
 }
 
 /**
@@ -13,12 +13,12 @@ function removeHeight (element) {
  * @param selectors
  */
 function removeHeights (selectors) {
-  selectors.forEach((selector) => {
-    const elements = document.querySelectorAll(selector)
-    elements.forEach((element) => {
-      removeHeight(element)
-    })
-  })
+  [].forEach.call(selectors, (selector) => {
+    const elements = document.querySelectorAll(selector);
+    [].forEach.call(elements, (element) => {
+      removeHeight(element);
+    });
+  });
 }
 
 /**
@@ -29,15 +29,15 @@ function removeHeights (selectors) {
  * @returns {number}
  */
 function getMinHeight (elements) {
-  let min = 0
+  let min = 0;
 
-  elements.forEach((element) => {
+  [].forEach.call(elements, (element) => {
     if (element.offsetHeight > min) {
-      min = element.offsetHeight
+      min = element.offsetHeight;
     }
-  })
+  });
 
-  return min
+  return min;
 }
 
 /**
@@ -46,12 +46,12 @@ function getMinHeight (elements) {
  * @param selector
  */
 function setHeight (selector) {
-  const elements = document.querySelectorAll(selector)
-  const height = getMinHeight(elements)
+  const elements = document.querySelectorAll(selector);
+  const height = getMinHeight(elements);
 
-  elements.forEach((element) => {
-    element.style.height = `${height}px`
-  })
+  [].forEach.call(elements, (element) => {
+    element.style.height = `${height}px`;
+  });
 }
 
 /**
@@ -62,21 +62,21 @@ function setHeight (selector) {
  * @returns {boolean}
  */
 function shouldRun (rules) {
-  let shouldRun = true
+  let shouldRun = true;
   rules.forEach((rule) => {
-    let min = 0
-    let max = rule
+    let min = 0;
+    let max = rule;
 
     if (typeof rule === 'object') {
-      [min, max] = rule
+      [min, max] = rule;
     }
 
     if (window.innerWidth > min && window.innerWidth < max) {
-      shouldRun = false
+      shouldRun = false;
     }
-  })
+  });
 
-  return shouldRun
+  return shouldRun;
 }
 
 /**
@@ -87,13 +87,13 @@ function shouldRun (rules) {
  */
 function matchHeights (selectors = [], disabled = []) {
   // Size each selector in turn
-  removeHeights(selectors)
+  removeHeights(selectors);
 
   // Check if the plugin should run
-  if (!shouldRun(disabled)) return false
+  if (!shouldRun(disabled)) return false;
 
   // Size each provided selector
-  selectors.forEach(setHeight)
+  selectors.forEach(setHeight);
 }
 
 
@@ -101,38 +101,38 @@ function plugin (Vue, options = {}) {
   Vue.directive('match-heights', {
     bind (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [])
+        matchHeights(binding.value.el, binding.value.disabled || options.disabled || []);
       }
-      matchHeightsFunc()
-      window.addEventListener('resize', matchHeightsFunc)
-      Vue.nextTick(matchHeightsFunc)
+      matchHeightsFunc();
+      window.addEventListener('resize', matchHeightsFunc);
+      Vue.nextTick(matchHeightsFunc);
     },
 
     inserted (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || [])
+        matchHeights(binding.value.el, binding.value.disabled || options.disabled || []);
       }
 
       // Handle images rendering
-      document.querySelectorAll(binding.value.el).forEach((el) => {
-        el.querySelectorAll('img').forEach((img) => {
-          img.addEventListener('load', matchHeightsFunc)
-        })
-      })
+      [].forEach.call(document.querySelectorAll(binding.value.el), (el) => {
+        [].forEach.call(el.querySelectorAll('img'), (img) => {
+          img.addEventListener('load', matchHeightsFunc);
+        });
+      });
 
       // Bind custom events to recalculate heights
-      el.addEventListener('matchheight', matchHeightsFunc, false)
-      document.addEventListener('matchheight', matchHeightsFunc, false)
+      el.addEventListener('matchheight', matchHeightsFunc, false);
+      document.addEventListener('matchheight', matchHeightsFunc, false);
     },
 
     unbind (el, binding) {}
-  })
+  });
 }
 
-plugin.version = '__VERSION__'
+plugin.version = '__VERSION__';
 
-export default plugin
+export default plugin;
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin)
+  window.Vue.use(plugin);
 }

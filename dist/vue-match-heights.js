@@ -1,6 +1,6 @@
 /*!
  * vue-match-heights v0.1.0 
- * (c) 2017 Sam Turrell
+ * (c) 2018 Sam Turrell
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -24,9 +24,9 @@ function removeHeight (element) {
  * @param selectors
  */
 function removeHeights (selectors) {
-  selectors.forEach(function (selector) {
+  [].forEach.call(selectors, function (selector) {
     var elements = document.querySelectorAll(selector);
-    elements.forEach(function (element) {
+    [].forEach.call(elements, function (element) {
       removeHeight(element);
     });
   });
@@ -42,13 +42,13 @@ function removeHeights (selectors) {
 function getMinHeight (elements) {
   var min = 0;
 
-  elements.forEach(function (element) {
+  [].forEach.call(elements, function (element) {
     if (element.offsetHeight > min) {
       min = element.offsetHeight;
     }
   });
 
-  return min
+  return min;
 }
 
 /**
@@ -60,7 +60,7 @@ function setHeight (selector) {
   var elements = document.querySelectorAll(selector);
   var height = getMinHeight(elements);
 
-  elements.forEach(function (element) {
+  [].forEach.call(elements, function (element) {
     element.style.height = height + "px";
   });
 }
@@ -88,7 +88,7 @@ function shouldRun (rules) {
     }
   });
 
-  return shouldRun
+  return shouldRun;
 }
 
 /**
@@ -105,7 +105,7 @@ function matchHeights (selectors, disabled) {
   removeHeights(selectors);
 
   // Check if the plugin should run
-  if (!shouldRun(disabled)) { return false }
+  if (!shouldRun(disabled)) { return false; }
 
   // Size each provided selector
   selectors.forEach(setHeight);
@@ -131,8 +131,8 @@ function plugin (Vue, options) {
       }
 
       // Handle images rendering
-      document.querySelectorAll(binding.value.el).forEach(function (el) {
-        el.querySelectorAll('img').forEach(function (img) {
+      [].forEach.call(document.querySelectorAll(binding.value.el), function (el) {
+        [].forEach.call(el.querySelectorAll('img'), function (img) {
           img.addEventListener('load', matchHeightsFunc);
         });
       });
