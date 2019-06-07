@@ -41,7 +41,7 @@
     "uglify-js": "^2.7.5",
     "vue": "^2.1.10",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.1"
+    "webpack-dev-server": "^3.1.11"
   },
   "files": [
     "dist/vue-match-heights.js",
