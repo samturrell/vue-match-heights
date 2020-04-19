@@ -12,9 +12,9 @@ function removeHeight (element) {
  *
  * @param selectors
  */
-function removeHeights (selectors) {
+function removeHeights (el, selectors) {
   [].forEach.call(selectors, (selector) => {
-    const elements = document.querySelectorAll(selector);
+    const elements = el.querySelectorAll(selector);
     [].forEach.call(elements, (element) => {
       removeHeight(element);
     });
@@ -45,8 +45,8 @@ function getMinHeight (elements) {
  *
  * @param selector
  */
-function setHeight (selector) {
-  const elements = document.querySelectorAll(selector);
+function setHeight (el, selector) {
+  const elements = el.querySelectorAll(selector);
   const height = getMinHeight(elements);
 
   [].forEach.call(elements, (element) => {
@@ -85,15 +85,15 @@ function shouldRun (rules) {
  * @param selectors
  * @param disabled
  */
-function matchHeights (selectors = [], disabled = []) {
+function matchHeights (el, selectors = [], disabled = []) {
   // Size each selector in turn
-  removeHeights(selectors);
+  removeHeights(el, selectors);
 
   // Check if the plugin should run
   if (!shouldRun(disabled)) return false;
 
   // Size each provided selector
-  selectors.forEach(setHeight);
+  selectors.forEach((selector) => setHeight(el, selector));
 }
 
 
@@ -101,7 +101,7 @@ function plugin (Vue, options = {}) {
   Vue.directive('match-heights', {
     bind (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || []);
+        matchHeights(el, binding.value.el, binding.value.disabled || options.disabled || []);
       }
       matchHeightsFunc();
       window.addEventListener('resize', matchHeightsFunc);
@@ -110,11 +110,11 @@ function plugin (Vue, options = {}) {
 
     inserted (el, binding) {
       function matchHeightsFunc () {
-        matchHeights(binding.value.el, binding.value.disabled || options.disabled || []);
+        matchHeights(el, binding.value.el, binding.value.disabled || options.disabled || []);
       }
 
       // Handle images rendering
-      [].forEach.call(document.querySelectorAll(binding.value.el), (el) => {
+      [].forEach.call(el.querySelectorAll(binding.value.el), (el) => {
         [].forEach.call(el.querySelectorAll('img'), (img) => {
           img.addEventListener('load', matchHeightsFunc);
         });
